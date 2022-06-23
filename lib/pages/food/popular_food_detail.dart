@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:hapook_food/pages/home/main_food_page.dart';
 import 'package:hapook_food/utlis/dimensions.dart';
 import 'package:hapook_food/widgets/app_column.dart';
 import 'package:hapook_food/widgets/app_icon.dart';
@@ -39,7 +41,12 @@ class PopularFoodDetail extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AppIcon(icon: Icons.arrow_back_ios, ),
+                  GestureDetector(
+                      child: AppIcon(icon: Icons.arrow_back_ios, ),
+                    onTap:()=> Get.to(()=>MainFoodPage()),
+
+
+                  ),
                   AppIcon(icon: Icons.shopping_cart_outlined, )
 
                 ],
