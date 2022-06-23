@@ -6,6 +6,7 @@ import 'package:hapook_food/pages/food/popular_food_detail.dart';
 import 'package:hapook_food/pages/food/recommended_food_detail.dart';
 import 'package:hapook_food/pages/home/food_page_body.dart';
 import 'package:hapook_food/pages/home/main_food_page.dart';
+import 'package:hapook_food/routes/route_helper.dart';
 import 'helper/dependencies.dart' as dep;
 
 void main() async {
@@ -26,11 +27,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
 
-        primarySwatch: Colors.blue,
-      ),
-      home: PopularFoodDetail(),
+      home: MainFoodPage(),
+      initialRoute: RouteHelper.initial,
+      getPages: RouteHelper.routes,
     );
   }
 }
