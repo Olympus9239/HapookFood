@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:hapook_food/controller/popular_product_controller.dart';
 import 'package:hapook_food/pages/home/main_food_page.dart';
+import 'package:hapook_food/utlis/app_constants.dart';
 import 'package:hapook_food/utlis/dimensions.dart';
 import 'package:hapook_food/widgets/app_column.dart';
 import 'package:hapook_food/widgets/app_icon.dart';
 import 'package:hapook_food/widgets/expendable_text_widget.dart';
 import 'package:hapook_food/widgets/small_text.dart';
-
+import 'package:get/get.dart';
 import '../../utlis/colors.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/icon_and_text_widget.dart';
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({Key? key}) : super(key: key);
+  int pageId;
+    PopularFoodDetail({Key? key,required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product=Get.find<PopularProductController>().popularproductlist[pageId];
+    print("page is Id"+pageId.toString());
+    print("page is Id"+product.name.toString());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -29,7 +35,7 @@ class PopularFoodDetail extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage("assets/image/food0.png"),
+                  image: NetworkImage(AppConstants.BASE_URL+AppConstants.UPLOAD_URI+product.img),
                 ),
               ),
           )),
@@ -70,11 +76,11 @@ class PopularFoodDetail extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppColumn(text: 'Chinese Side',),
+                    AppColumn(text: product.name,),
                     SizedBox(height: Dimensions.height20,),
                     BigText(text: "Introduce"),
                     SizedBox(height: Dimensions.height15,),
-                    Expanded(child: SingleChildScrollView(child: ExpandableTextWidget(text: "Bhindi Masala is a well known and often made popular Indian dish and combining it with chicken takes the flavour to a whole new level.  Bhindi Masala is a well known and often made popular Indian dish and combining it with chicken takes the flavour to a whole new level. Bhindi Masala is a well known and often made popular Indian dish and combining it with chicken takes the flavour to a whole new level. Bhindi Masala is a well known and often made popular Indian dish and combining it with chicken takes the flavour to a whole new level.  ")))
+                    Expanded(child: SingleChildScrollView(child: ExpandableTextWidget(text: product.description)))
                   ],   
                 )
           )), 
@@ -113,7 +119,7 @@ class PopularFoodDetail extends StatelessWidget {
            ),
             Container(
               padding: EdgeInsets.only(top: Dimensions.height20,bottom: Dimensions.height20,right: Dimensions.width30,left: Dimensions.width30),
-              child: BigText(text: "\$10 | Add to Cart ",color: Colors.white,),
+              child: BigText(text: "\$ ${product.price} + "+" Add to Cart ",color: Colors.white,),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radius20),
                 color: AppColors.mainColor,

@@ -53,19 +53,12 @@ class _FoodPageBodyState extends State<FoodPageBody> {
          return  popularproducts.isLoaded?Container(
            // color: Colors.redAccent,
            height: Dimensions.pageView,
-           child: GestureDetector(
-
-             onTap: (){
-               Get.toNamed(RouteHelper.getPopularFood());
-
-             },
-             child: PageView.builder(
-                 controller: pageController,
-                 itemCount: popularproducts.popularproductlist.length,
-                 itemBuilder: (context, position) {
-                   return _buildPageItem(position,popularproducts.popularproductlist[position]);
-                 }),
-           ),
+           child: PageView.builder(
+               controller: pageController,
+               itemCount: popularproducts.popularproductlist.length,
+               itemBuilder: (context, position) {
+                 return _buildPageItem(position,popularproducts.popularproductlist[position]);
+               }),
          ):CircularProgressIndicator(color: AppColors.mainColor,);
        }),
         GetBuilder<PopularProductController>(builder: (popularproducts){
@@ -110,14 +103,14 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         // list of food and images
 
          GetBuilder<RecommendedProductController>(builder: (recommendedProduct){
-           return recommendedProduct.isLoaded?GestureDetector(
-             onTap: ()=>Get.toNamed(RouteHelper.getrecommendedFood()),
-             child: ListView.builder(
-                 physics: const NeverScrollableScrollPhysics(),
-                 shrinkWrap: true,
-                 itemCount: recommendedProduct.recommendedProductList.length,
-                 itemBuilder: (context, index) {
-                   return Container(
+           return recommendedProduct.isLoaded?ListView.builder(
+               physics: const NeverScrollableScrollPhysics(),
+               shrinkWrap: true,
+               itemCount: recommendedProduct.recommendedProductList.length,
+               itemBuilder: (context, index) {
+                 return GestureDetector(
+                   onTap: ()=>Get.toNamed(RouteHelper.getrecommendedFood(index)),
+                   child: Container(
                      margin: EdgeInsets.only(
                          left: Dimensions.width20, right: Dimensions.width20,bottom: Dimensions.width20 ),
                      child: Row(
@@ -184,9 +177,9 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
                        ],
                      ),
-                   );
-                 }),
-           ):CircularProgressIndicator(
+                   ),
+                 );
+               }):CircularProgressIndicator(
              color: AppColors.mainColor,
            );
          })
@@ -223,18 +216,23 @@ class _FoodPageBodyState extends State<FoodPageBody> {
       transform: matrix,
       child: Stack(
         children: [
-          Container(
-            margin: EdgeInsets.only(
-                left: Dimensions.width10, right: Dimensions.width10),
-            height: Dimensions.pageViewContainer,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.radius30),
-                color: index.isEven ? Color(0xFF69c5df) : Color(0xFF9294cc),
-                image: DecorationImage(
-                  image: NetworkImage(AppConstants.BASE_URL+AppConstants.UPLOAD_URI+popularproduct.img),
-                  fit: BoxFit.cover,
-                )),
-          ),
+          GestureDetector(
+        onTap: (){
+      Get.toNamed(RouteHelper.getPopularFood(index));
+      },
+            child: Container(
+              margin: EdgeInsets.only(
+                  left: Dimensions.width10, right: Dimensions.width10),
+              height: Dimensions.pageViewContainer,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Dimensions.radius30),
+                  color: index.isEven ? Color(0xFF69c5df) : Color(0xFF9294cc),
+                  image: DecorationImage(
+                    image: NetworkImage(AppConstants.BASE_URL+AppConstants.UPLOAD_URI+popularproduct.img),
+                    fit: BoxFit.cover,
+                  )),
+            ),
+    ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(

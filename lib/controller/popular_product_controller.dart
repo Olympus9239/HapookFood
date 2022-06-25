@@ -11,7 +11,7 @@ class PopularProductController extends GetxController{
    List<ProductModel>  get popularproductlist => _popularProductList;
 
    bool _isLoaded=false;
-   bool get isLoaded=>_isLoaded;
+   bool get isLoaded=>_isLoaded;// we are using get function to get the private isloaded
 
 
    Future<void>  getPopularProduct()async{

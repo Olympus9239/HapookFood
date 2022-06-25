@@ -10,16 +10,25 @@ class RouteHelper{
 
 
 
-  static String getPopularFood()=> '$popularFood';
+  static String getPopularFood(int pageId)=> '$popularFood?pageId=$pageId';
   static String getinitialRoute()=>'$initial';
-  static String getrecommendedFood()=>'$recommendedFood';
+  static String getrecommendedFood(int pageId)=>'$recommendedFood?pageId=$pageId';//variable inside a string we use dollar sign
 
   static List<GetPage> routes=[
     GetPage(name: initial, page: ()=>MainFoodPage()),
-    GetPage(name: popularFood,page: ()=>PopularFoodDetail(),
-    transition: Transition.fadeIn
+    GetPage(name: popularFood,page:(){
+      var pageId=Get.parameters['pageId'];
+     return   PopularFoodDetail(pageId: int.parse(pageId!),);
+    },
+      transition: Transition.fadeIn,
+
+
+
     ),
-    GetPage(name: recommendedFood,page: ()=>RecommendedFoodDetail( ),
+    GetPage(name: recommendedFood,page: (){
+      var pageId=Get.parameters['pageId'];
+      return  RecommendedFoodDetail(pageId:int.parse(pageId!));
+},
         transition: Transition.fadeIn
     ),
 

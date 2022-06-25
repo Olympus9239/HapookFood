@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hapook_food/controller/recommended_product_controller.dart';
 import 'package:hapook_food/routes/route_helper.dart';
+import 'package:hapook_food/utlis/app_constants.dart';
 import 'package:hapook_food/utlis/colors.dart';
 import 'package:hapook_food/utlis/dimensions.dart';
 import 'package:hapook_food/widgets/app_icon.dart';
@@ -8,9 +10,11 @@ import 'package:hapook_food/widgets/big_text.dart';
 import 'package:hapook_food/widgets/expendable_text_widget.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
-  const RecommendedFoodDetail({Key? key}) : super(key: key);
+ final int pageId;
+  const RecommendedFoodDetail({Key? key,required this.pageId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+      var product=Get.find<RecommendedProductController>().recommendedProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView  (
@@ -34,7 +38,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                 child: Center(
                     child: BigText(
                   size: Dimensions.font26,
-                  text: "Chinese Side",
+                  text: product.name,
                 )),
                 width: double.maxFinite,
                 padding: EdgeInsets.only(top: 5, bottom: 10),
@@ -50,17 +54,16 @@ class RecommendedFoodDetail extends StatelessWidget {
             pinned: true,
             backgroundColor: AppColors.yellowColor,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                "assets/image/food0.png",
+              background: Image.network(
+                AppConstants.BASE_URL+AppConstants.UPLOAD_URI+product.img,
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: ExpandableTextWidget(
-              text:
-                  "Chicken chilly is tasty,Chicken chilly is tasty,Chicken chilly is tasty,Chicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tastyChicken chilly is tasty",
+              text: product.description,
             ),
           )
         ],
@@ -85,7 +88,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                   iconColor: Colors.white,
 
                 ),
-                BigText(text: "\$12.88"+"X"+"0",color: AppColors.mainBlackColor,),
+                BigText(text: "\$"+product.price.toString()+  "X"+  "0",color: AppColors.mainBlackColor,),
                 AppIcon(
                   size: Dimensions.iconSize24,
                   icon: Icons.add,
@@ -122,7 +125,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsets.only(top: Dimensions.height20,bottom: Dimensions.height20,right: Dimensions.width30,left: Dimensions.width30),
-                  child: BigText(text: "\$10 | Add to Cart ",color: Colors.white,),
+                  child: BigText(text: "\$${product.price} Add to Cart ",color: Colors.white,),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(Dimensions.radius20),
                     color: AppColors.mainColor,
